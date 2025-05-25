@@ -1,0 +1,53 @@
+PODSUMOWANIE EKSPERYMENTU
+
+Liczba analizowanych meczów: 30000
+Liczba cech predykcyjnych: 10
+
+Wyniki modelu predykcyjnego (używającego statystyk historycznych):
+- Logistic Regression: dokładność = 0.6058
+- Random Forest: dokładność = 0.5900
+- Gradient Boosting: dokładność = 0.6040
+- KNN: dokładność = 0.5658
+- Naive Bayes: dokładność = 0.6090
+- Neural Network (MLP): dokładność = 0.5550
+- Deep Neural Network: dokładność = 0.5987
+- Decision Tree (Optimized): dokładność = 0.5983
+
+Wyniki modelu oryginalnego (używającego statystyk z meczu):
+- Logistic Regression: dokładność = 0.9154
+- Random Forest: dokładność = 0.9185
+- Gradient Boosting: dokładność = 0.9194
+- KNN: dokładność = 0.9004
+- Naive Bayes: dokładność = 0.8813
+- Neural Network (MLP): dokładność = 0.9108
+- Deep Neural Network: dokładność = 0.9228
+
+Najlepszy model predykcyjny: Naive Bayes - dokładność: 0.6090
+Najlepszy model oryginalny: Deep Neural Network - dokładność: 0.9228
+
+
+ANALIZA REGUŁ ASOCJACYJNYCH
+
+Znaleziono 27 reguł asocjacyjnych.
+
+Top 10 reguł asocjacyjnych według lift:
+1. ['home_adv_cat_wysoki', 'fg_pct_diff_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
+   Lift: 2.446, Confidence: 0.806, Support: 0.132
+2. ['fg_pct_diff_cat_niski', 'home_adv_cat_niski'] => ['win_pct_diff_cat_niski']
+   Lift: 2.384, Confidence: 0.823, Support: 0.140
+3. ['home_adv_cat_wysoki', 'ast_diff_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
+   Lift: 2.330, Confidence: 0.768, Support: 0.107
+4. ['fg3_pct_diff_cat_wysoki', 'home_adv_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
+   Lift: 2.314, Confidence: 0.762, Support: 0.114
+5. ['home_adv_cat_niski', 'fg3_pct_diff_cat_niski'] => ['win_pct_diff_cat_niski']
+   Lift: 2.310, Confidence: 0.798, Support: 0.124
+6. ['reb_diff_cat_wysoki', 'home_adv_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
+   Lift: 2.280, Confidence: 0.751, Support: 0.102
+7. ['ast_diff_cat_niski', 'home_adv_cat_niski'] => ['win_pct_diff_cat_niski']
+   Lift: 2.260, Confidence: 0.780, Support: 0.119
+8. ['reb_diff_cat_niski', 'home_adv_cat_niski'] => ['win_pct_diff_cat_niski']
+   Lift: 2.236, Confidence: 0.772, Support: 0.113
+9. ['home_adv_cat_niski', 'tov_diff_cat_wysoki'] => ['win_pct_diff_cat_niski']
+   Lift: 2.230, Confidence: 0.770, Support: 0.105
+10. ['tov_diff_cat_niski', 'home_adv_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
+   Lift: 2.226, Confidence: 0.733, Support: 0.101
