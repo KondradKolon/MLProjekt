@@ -448,6 +448,19 @@ except Exception as e:
     print(f"Błąd przy generowaniu krzywej uczenia: {e}")
     print(f"Postęp: 98% (pominięto krzywą uczenia)")
 # ETAP 8: Porównanie z oryginalnym modelem i podsumowanie (100% postępu)
+
+
+print("\n" + "="*60)
+print("🏀 ETAP 8: ANALIZA REGUŁ ASOCJACYJNYCH")
+print("="*60)
+    
+from association_rules import run_association_analysis
+success = run_association_analysis(features_clean, config['results_dir'])
+    
+if success:
+    print("✅ Analiza reguł asocjacyjnych zakończona!")
+else:
+    print("❌ Błąd w analizie reguł asocjacyjnych")
 print("\n[8/8] Porównanie modeli i podsumowanie...")
 
 # Porównanie z oryginalnym modelem (opcjonalnie)
@@ -538,3 +551,5 @@ execution_time = end_time - start_time
 print(f"\nCzas wykonania: {execution_time:.2f} sekund ({execution_time/60:.2f} minut)")
 print(f"Postęp: 100% (zakończono)")
 print("\nAnaliza wyników NBA zakończona pomyślnie!")
+
+
