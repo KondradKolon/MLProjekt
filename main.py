@@ -8,7 +8,6 @@ from model_training import train_and_evaluate_models
 from visualizations import plot_model_comparison, plot_confusion_matrices, plot_feature_importance, plot_seasonal_accuracy
 from data_preprocessing import prepare_features, prepare_predictive_features, prepare_predictive_features_sample
 from error_analysis import analyze_errors
-# Dodaj ten import na początku pliku, razem z innymi importami:
 from sklearn.metrics import accuracy_score
 from hyperparameter_tuning import optimize_hyperparameters
 # Konfiguracja projektu
