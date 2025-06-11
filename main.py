@@ -3,35 +3,31 @@ import pandas as pd
 import os
 import time
 import numpy as np
-from data_loader import load_data, get_basic_stats
-from model_training import train_and_evaluate_models
-from visualizations import plot_model_comparison, plot_confusion_matrices, plot_feature_importance, plot_seasonal_accuracy
-from data_preprocessing import prepare_features, prepare_predictive_features, prepare_predictive_features_sample
-from error_analysis import analyze_errors
-# Dodaj ten import na początku pliku, razem z innymi importami:
+from MLProjekt.Dane.data_loader import load_data, get_basic_stats
+from MLProjekt.Modele_ML.model_training import train_and_evaluate_models
+from MLProjekt.Analiza.visualizations import plot_model_comparison, plot_confusion_matrices, plot_feature_importance, plot_seasonal_accuracy
+from MLProjekt.Dane.data_preprocessing import prepare_features, prepare_predictive_features, prepare_predictive_features_sample
+from MLProjekt.Analiza.error_analysis import analyze_errors
 from sklearn.metrics import accuracy_score
-from hyperparameter_tuning import optimize_hyperparameters
+from MLProjekt.Modele_ML.hyperparameter_tuning import optimize_hyperparameters
 # Konfiguracja projektu
 config = {
     'n_games': 10,          # Ile poprzednich meczów analizować
-    'use_sample': True,     # Czy używać próbki zamiast pełnego zbioru
-    'sample_size': 30000,   # Rozmiar próbki (jeśli use_sample=True)
+    'use_sample': True,    
+    'sample_size': 30000,   
     'sample_method': 'recent',  # Metoda próbkowania: 'recent', 'random' lub 'season'
-    'use_cache': True,      # Czy używać cache'u
-    'cache_file': 'cached_features.csv',  # Nazwa pliku cache'u
-    'compare_with_original': True,  # Czy porównywać z oryginalnym modelem
-    'save_results': True,   # Czy zapisywać wyniki
-    'results_dir': 'wyniki'  # Katalog na wyniki
+    'use_cache': True,    
+    'cache_file': 'cached_features.csv',  
+    'compare_with_original': True,  
+    'save_results': True,   
+    'results_dir': 'wyniki'  
 }
 
-# Utwórz katalog na wyniki jeśli nie istnieje
 if config['save_results'] and not os.path.exists(config['results_dir']):
     os.makedirs(config['results_dir'])
 
-# Ścieżka do plików
 data_path = "/home/user/Semestr4/ProjektyS4/MLProjekt/csv/"
 
-# 1. Najpierw zaktualizuj nazwę pliku cache
 if config['use_sample']:
     config['cache_file'] = f"cached_features_{config['sample_method']}_{config['sample_size']}.csv"
 else:
@@ -50,7 +46,7 @@ print("=" * 80)
 # Mierzenie czasu wykonania
 start_time = time.time()
 
-# ETAP 1: Wczytanie danych (10% postępu)
+# ETAP 1: Wczytanie danych 
 print("\n[1/8] Wczytywanie danych...")
 data = load_data(data_path)
 
@@ -62,7 +58,7 @@ print(f"Liczba drużyn: {stats['num_teams']}")
 print(f"Procent zwycięstw gospodarzy: {stats['home_advantage']:.2%}")
 print(f"Postęp: 10% (wczytano dane)")
 
-# ETAP 2: Przygotowanie cech predykcyjnych (30% postępu)
+# ETAP 2: Przygotowanie cech predykcyjnych 
 print("\n[2/8] Przygotowywanie cech predykcyjnych...")
 
 # Sprawdzenie czy istnieje plik cache'u
@@ -90,16 +86,12 @@ else:
             data['team'], 
             n_games=config['n_games']
         )
-    
-    # Zapisz do cache'u
     if config['use_cache']:
         print(f"Zapisywanie cech do cache'u: {cache_path}")
         predictive_features_df.to_csv(cache_path, index=False)
 
 print(f"WAŻNE: Faktycznie wygenerowano {len(predictive_features_df)} meczów")
 print(f"Postęp: 30% (przygotowano cechy)")
-
-# ETAP 3: Wybór cech i czyszczenie danych (40% postępu)
 print("\n[3/8] Wybór cech i czyszczenie danych...")
 
 # Wybór cech predykcyjnych
@@ -111,9 +103,7 @@ selected_predictive_features = [
 # Usunięcie NaN
 features_clean = predictive_features_df.dropna(subset=selected_predictive_features)
 print(f"Po usunięciu NaN pozostało {len(features_clean)} wierszy")
-print(f"Postęp: 40% (wybrano cechy i oczyszczono dane)")
 
-# ETAP 4: Podział na zbiory treningowy i testowy (50% postępu)
 print("\n[4/8] Podział na zbiory treningowy i testowy...")
 
 # Podział na zbiory treningowy i testowy
@@ -142,7 +132,7 @@ print(f"Postęp: 60% (wytrenowano modele)")
 
 
 # Dodaj ten import na początku pliku
-from decision_tree_analysis import train_decision_tree, plot_decision_tree_visualization, plot_feature_importance_dt, get_decision_rules, analyze_decision_paths, optimize_decision_tree
+from MLProjekt.Modele_ML.decision_tree_analysis import train_decision_tree, plot_decision_tree_visualization, plot_feature_importance_dt, get_decision_rules, analyze_decision_paths, optimize_decision_tree
 
 # Dodaj ten kod po sekcji trenowania modeli:
 
@@ -263,13 +253,8 @@ except ImportError:
     print("Nie znaleziono pakietu mlxtend - pomijam analizę reguł asocjacyjnych")
     print("Aby zainstalować: pip install mlxtend")
     rules = pd.DataFrame()
-    print(f"Postęp: 70% (pominięto analizę reguł asocjacyjnych)")
-
-
-# ETAP 7: Wizualizacje i analiza wyników (90% postępu)
+# ETAP 7: Wizualizacje i analiza wyników
 print("\n[7/8] Tworzenie wizualizacji i analiza wyników...")
-
-# Wizualizacja wyników
 if config['save_results']:
     output_path = os.path.join(config['results_dir'], 'model_comparison_predictive.png')
 else:
@@ -277,7 +262,7 @@ else:
 
 plot_model_comparison(model_results, output_path)
 
-# Tworzenie macierzy pomyłek
+
 if config['save_results']:
     output_path = os.path.join(config['results_dir'], 'confusion_matrices.png')
 else:
@@ -285,11 +270,10 @@ else:
 
 plot_confusion_matrices(model_results, y_test, predictions, output_path)
 
-# Analiza ważności cech
 
 # Analiza ważności cech
 best_model_name = max(model_results.items(), key=lambda x: x[1]['accuracy'])[0]
-# Dodaj tę linię, aby zdefiniować best_model dla wszystkich typów modeli
+
 best_model = model_results[best_model_name]['model']
 
 if best_model_name in ['Random Forest', 'Gradient Boosting']:
@@ -305,7 +289,6 @@ if best_model_name in ['Random Forest', 'Gradient Boosting']:
         output_path
     )
 
-# Analiza sezonowa (jeśli istnieje kolumna game_date)
 if 'game_date' in features_clean.columns:
     features_clean['season'] = pd.to_datetime(features_clean['game_date']).dt.year
     seasons = features_clean['season'].unique()
@@ -320,7 +303,7 @@ if 'game_date' in features_clean.columns:
         if len(season_data) < 50:  # Pomiń sezony z małą liczbą meczów
             continue
             
-        # Podziel dane z danego sezonu
+    
         season_train_size = int(0.8 * len(season_data))
         season_train = season_data.iloc[:season_train_size]
         season_test = season_data.iloc[season_train_size:]
@@ -349,14 +332,13 @@ if 'game_date' in features_clean.columns:
             output_path = None
         plot_seasonal_accuracy(seasonal_results, output_path)
 
-print(f"Postęp: 90% (utworzono wizualizacje)")
 # ETAP 7.5: Optymalizacja hiperparametrów
 print("\n[7.5/8] Optymalizacja hiperparametrów najlepszego modelu...")
 
 try:
-    from hyperparameter_tuning import optimize_hyperparameters
+    from MLProjekt.Modele_ML.hyperparameter_tuning import optimize_hyperparameters
     
-    # Optymalizuj hiperparametry dla najlepszego modelu
+    
     print(f"Optymalizacja hiperparametrów dla modelu {best_model_name}...")
     best_tuned_model, best_params, best_cv_score = optimize_hyperparameters(
         best_model_name, model_results[best_model_name]['model'], 
@@ -385,7 +367,7 @@ except ImportError:
 print("\n[7.6/8] Analiza błędów modelu...")
 
 try:
-    from error_analysis import analyze_errors
+    from MLProjekt.Analiza.error_analysis import analyze_errors
     
     # Analiza błędów najlepszego modelu
     if config['save_results']:
@@ -393,7 +375,7 @@ try:
     else:
         output_path = None
     
-    # Wykonaj analizę błędów
+   
     fig, error_df = analyze_errors(
         X_test_scaled, y_test, predictions[best_model_name], selected_predictive_features
     )
@@ -423,7 +405,7 @@ except ImportError:
 print("\n[7.7/8] Generowanie krzywej uczenia...")
 
 try:
-    from visualizations import plot_learning_curves
+    from MLProjekt.Analiza.visualizations import plot_learning_curves
     
     # Generowanie krzywej uczenia dla najlepszego modelu
     if config['save_results']:
@@ -454,7 +436,7 @@ print("\n" + "="*60)
 print("🏀 ETAP 8: ANALIZA REGUŁ ASOCJACYJNYCH")
 print("="*60)
     
-from association_rules import run_association_analysis
+from MLProjekt.Analiza.association_rules import run_association_analysis
 success = run_association_analysis(features_clean, config['results_dir'])
     
 if success:
