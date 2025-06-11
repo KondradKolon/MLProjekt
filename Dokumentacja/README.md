@@ -56,7 +56,7 @@ i pobranie bazy danych z Kaggle (nie chcialem miec na repo bazy 5GB)
 ### Uruchomienie
 ```bash
 python main.py
-albo python =m MLProjekt.main
+albo python -m MLProjekt.main
 ```
 
 ## 📈 Wyniki
