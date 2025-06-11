@@ -297,3 +297,34 @@ def plot_learning_curves(model, X, y, cv, train_sizes=np.linspace(0.1, 1.0, 10),
         plt.show()
     
     return plt
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+def plot_feature_distributions(features_clean, selected_features, output_path=None):
+    """Generuje wykresy rozkładu cech predykcyjnych"""
+    
+    # Konfiguracja wykresu
+    plt.figure(figsize=(16, 12))
+    plt.suptitle("Rozkład cech predykcyjnych w meczach NBA", fontsize=16)
+    
+    # Tworzenie subplotów
+    for i, feature in enumerate(selected_features, 1):
+        plt.subplot(3, 4, i)
+        
+        # Użyj histogramu z Seaborn dla lepszego wyglądu
+        sns.histplot(features_clean[feature], kde=True, color='darkblue')
+        
+        plt.title(f'Rozkład: {feature}')
+        plt.grid(True, alpha=0.3)
+        plt.tight_layout(rect=[0, 0, 1, 0.96])
+    
+    
+    if output_path:
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        print(f"Zapisano wykres rozkładów do {output_path}")
+    else:
+        plt.show()
+    
+    return plt.gcf()

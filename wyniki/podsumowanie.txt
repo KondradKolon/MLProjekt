@@ -4,10 +4,10 @@ Liczba analizowanych meczów: 30000
 Liczba cech predykcyjnych: 10
 
 Wyniki modelu predykcyjnego (używającego statystyk historycznych):
-- Logistic Regression: dokładność = 0.6058
-- Random Forest: dokładność = 0.5900
+- Logistic Regression: dokładność = 0.6060
+- Random Forest: dokładność = 0.6038
 - Gradient Boosting: dokładność = 0.6040
-- KNN: dokładność = 0.5658
+- KNN: dokładność = 0.5817
 - Naive Bayes: dokładność = 0.6090
 - Neural Network (MLP): dokładność = 0.5550
 - Deep Neural Network: dokładność = 0.5987
@@ -26,28 +26,62 @@ Najlepszy model predykcyjny: Naive Bayes - dokładność: 0.6090
 Najlepszy model oryginalny: Deep Neural Network - dokładność: 0.9228
 
 
+WYNIKI OPTYMALIZACJI HIPERPARAMETRÓW
+
+Model: Naive Bayes
+- Dokładność przed optymalizacją: 0.6083
+- Dokładność po optymalizacji: 0.6090
+- Poprawa: 0.0007 (0.07%)
+- Najlepsze parametry: {'var_smoothing': np.float64(1.0)}
+
+Model: Random Forest
+- Dokładność przed optymalizacją: 0.5900
+- Dokładność po optymalizacji: 0.6038
+- Poprawa: 0.0138 (1.38%)
+- Najlepsze parametry: {'n_estimators': 200, 'min_samples_split': 5, 'min_samples_leaf': 4, 'max_depth': 10}
+
+Model: Gradient Boosting
+- Dokładność przed optymalizacją: 0.6040
+- Dokładność po optymalizacji: 0.6040
+- Poprawa: 0.0000 (0.00%)
+- Najlepsze parametry: {'n_estimators': 100, 'max_depth': 3, 'learning_rate': 0.1}
+
+Model: Logistic Regression
+- Dokładność przed optymalizacją: 0.6058
+- Dokładność po optymalizacji: 0.6060
+- Poprawa: 0.0002 (0.02%)
+- Najlepsze parametry: {'solver': 'liblinear', 'C': 100}
+
+Model: KNN
+- Dokładność przed optymalizacją: 0.5658
+- Dokładność po optymalizacji: 0.5817
+- Poprawa: 0.0158 (1.58%)
+- Najlepsze parametry: {'weights': 'uniform', 'p': 2, 'n_neighbors': 11}
+
+
+
 ANALIZA REGUŁ ASOCJACYJNYCH
 
-Znaleziono 27 reguł asocjacyjnych.
+Znaleziono 7185 reguł asocjacyjnych.
 
 Top 10 reguł asocjacyjnych według lift:
-1. ['home_adv_cat_wysoki', 'fg_pct_diff_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
+1. ['fg_pct_diff=fg_pct_diff_medium', 'home_win=win', 'home_adv=home_adv_medium'] => ['win_pct_diff=win_pct_diff_medium']
+   Lift: 2.536, Confidence: 0.836, Support: 0.102
+2. ['fg_pct_diff=fg_pct_diff_medium', 'home_adv=home_adv_medium'] => ['win_pct_diff=win_pct_diff_medium']
    Lift: 2.446, Confidence: 0.806, Support: 0.132
-2. ['fg_pct_diff_cat_niski', 'home_adv_cat_niski'] => ['win_pct_diff_cat_niski']
-   Lift: 2.384, Confidence: 0.823, Support: 0.140
-3. ['home_adv_cat_wysoki', 'ast_diff_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
-   Lift: 2.330, Confidence: 0.768, Support: 0.107
-4. ['fg3_pct_diff_cat_wysoki', 'home_adv_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
-   Lift: 2.314, Confidence: 0.762, Support: 0.114
-5. ['home_adv_cat_niski', 'fg3_pct_diff_cat_niski'] => ['win_pct_diff_cat_niski']
-   Lift: 2.310, Confidence: 0.798, Support: 0.124
-6. ['reb_diff_cat_wysoki', 'home_adv_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
+3. ['ast_diff=ast_diff_medium', 'home_adv=home_adv_medium'] => ['win_pct_diff=win_pct_diff_medium']
+   Lift: 2.331, Confidence: 0.768, Support: 0.107
+4. ['fg3_pct_diff=fg3_pct_diff_medium', 'home_adv=home_adv_medium'] => ['win_pct_diff=win_pct_diff_medium']
+   Lift: 2.313, Confidence: 0.762, Support: 0.114
+5. ['reb_diff=reb_diff_medium', 'home_adv=home_adv_medium'] => ['win_pct_diff=win_pct_diff_medium']
    Lift: 2.280, Confidence: 0.751, Support: 0.102
-7. ['ast_diff_cat_niski', 'home_adv_cat_niski'] => ['win_pct_diff_cat_niski']
-   Lift: 2.260, Confidence: 0.780, Support: 0.119
-8. ['reb_diff_cat_niski', 'home_adv_cat_niski'] => ['win_pct_diff_cat_niski']
-   Lift: 2.236, Confidence: 0.772, Support: 0.113
-9. ['home_adv_cat_niski', 'tov_diff_cat_wysoki'] => ['win_pct_diff_cat_niski']
-   Lift: 2.230, Confidence: 0.770, Support: 0.105
-10. ['tov_diff_cat_niski', 'home_adv_cat_wysoki'] => ['win_pct_diff_cat_wysoki']
-   Lift: 2.226, Confidence: 0.733, Support: 0.101
+6. ['tov_diff=tov_diff_low', 'home_win=win', 'home_adv=home_adv_medium'] => ['win_pct_diff=win_pct_diff_medium']
+   Lift: 2.250, Confidence: 0.742, Support: 0.131
+7. ['win_pct_diff=win_pct_diff_medium', 'ast_diff=ast_diff_medium'] => ['fg_pct_diff=fg_pct_diff_medium']
+   Lift: 2.211, Confidence: 0.736, Support: 0.112
+8. ['win_pct_diff=win_pct_diff_medium', 'fg_pct_diff=fg_pct_diff_medium', 'home_win=win'] => ['home_adv=home_adv_medium']
+   Lift: 2.211, Confidence: 0.733, Support: 0.102
+9. ['home_win=win', 'home_adv=home_adv_medium'] => ['win_pct_diff=win_pct_diff_medium']
+   Lift: 2.178, Confidence: 0.718, Support: 0.167
+10. ['win_pct_diff=win_pct_diff_medium', 'fg_pct_diff=fg_pct_diff_medium'] => ['home_adv=home_adv_medium']
+   Lift: 2.152, Confidence: 0.713, Support: 0.132

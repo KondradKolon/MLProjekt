@@ -31,16 +31,16 @@ def train_and_evaluate_models(X_train, y_train, X_test, y_test):
                                          solver='adam',
                                          random_state=42),
         'Deep Neural Network': MLPClassifier(
-    hidden_layer_sizes=(200, 100, 50), 
-    max_iter=2000,
-    activation='relu', 
-    solver='adam',
-    alpha=0.0001,
-    learning_rate='adaptive',
-    early_stopping=True,
-    validation_fraction=0.1,
-    random_state=42
-)
+                                        hidden_layer_sizes=(200, 100, 50), 
+                                        max_iter=2000,
+                                        activation='relu', 
+                                        solver='adam',
+                                        alpha=0.0001,
+                                        learning_rate='adaptive',
+                                        early_stopping=True,
+                                        validation_fraction=0.1,
+                                        random_state=42)                                
+        
     }  # Naprawiłem też nawias klamrowy
     
     # Słownik z wynikami
